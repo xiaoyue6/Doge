@@ -8,7 +8,7 @@
     </settings>   
 	<plugins>
 	    <!-- com.github.pagehelper为PageHelper类所在包名 -->
-	    <plugin interceptor="com.better517na.commons.query.PageHelper">
+	    <plugin interceptor="com.cuit.commons.query.PageHelper">
 	        <property name="dialect" value="mysql"/>
 	        <!-- 该参数默认为false -->
 	        <!-- 设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用 -->
@@ -27,8 +27,9 @@
 	    </plugin>
 	</plugins>
     <mappers>
-    	 <mapper resource="com/better517na/config/mybatis_sql/DogeMusicDataService.xml"/>   
-         <mapper resource="com/better517na/config/mybatis_sql/AdManageDataService.xml"/>
-         <mapper resource="com/better517na/config/mybatis_sql/AdManageDataServiceExpand.xml"/>
+    	 <mapper resource="com/cuit/config/mybatis_sql/FriendData.xml"/>   
+    	 <mapper resource="com/cuit/config/mybatis_sql/Login.xml"/>   
+         <!-- <mapper resource="com/cuit/config/mybatis_sql/AdManageDataService.xml"/>
+         <mapper resource="com/cuit/config/mybatis_sql/AdManageDataServiceExpand.xml"/> -->
     </mappers>  
 </configuration>

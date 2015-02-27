@@ -13,11 +13,15 @@
         http://www.springframework.org/schema/aop 
         http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
-	<bean id="parentDataSource" class="com.better517na.factory.DataSourceMapper"
+	<bean id="parentDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		abstract="true">
-		<property name="applicationName" value="${applicationName}"></property>
+		<!-- <property name="applicationName" value="${applicationName}"></property>
 		<property name="databaseName" value="${databaseName}"></property>
-		<property name="bizTime" value="${bizTime}"></property>
+		<property name="bizTime" value="${bizTime}"></property> -->
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />      
+    	<property name="url" value="jdbc:mysql://192.168.1.61:3309/java_test" />      
+    	<property name="username" value="betterdev" />      
+    	<property name="password" value="better2008" /> 
 
 		<property name="initialSize" value="${pool.initialSize}" />
 		<property name="maxActive" value="${pool.maxActive}" />
@@ -29,12 +33,11 @@
 
 	<!-- 配置第一数据源 （写库） -->
 	<bean id="dataSourceWrite" parent="parentDataSource">
-		<property name="isRead" value="false"></property>
 	</bean>
 
 	<bean id="sqlSessionFactoryWrite" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation"
-			value="classpath:com/better517na/config/spring/mybatis-config.xml"></property>
+			value="classpath:com/cuit/config/spring/mybatis-config.xml"></property>
 		<property name="dataSource" ref="dataSourceWrite" />
 	</bean>
 
@@ -52,12 +55,11 @@
 	</bean>
 	<!-- 配置第二数据源 （读库） -->
 	<bean id="dataSourceRead" parent="parentDataSource">
-		<property name="isRead" value="true"></property>
 	</bean>
 
 	<bean id="sqlSessionFactoryRead" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation"
-			value="classpath:com/better517na/config/spring/mybatis-config.xml"></property>
+			value="classpath:com/cuit/config/spring/mybatis-config.xml"></property>
 		<property name="dataSource" ref="dataSourceRead" />
 	</bean>
 
