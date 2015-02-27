@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
  * @version v1.0
  * @author wk
  */
+
 @Controller
 public class BaseController {
 	private Gson gson=new GsonBuilder().serializeNulls().create();
