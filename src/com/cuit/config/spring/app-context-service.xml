@@ -19,11 +19,11 @@
 	<!--<dubbo:protocol name="dubbo" port="${dubbo.port}" /> -->
 	<dubbo:protocol name="dubbo" port="${dubbo.port}" />
 	<!-- 声明需要暴露的服务接口 -->
-	<dubbo:service
+	<!-- <dubbo:service
 		interface="com.better517na.adsManageDataService.service.IAdManageDataService"
 		ref="adManageDataService" timeout="120000" retries="0"/>
 	<dubbo:service
 		interface="com.better517na.adsManageDataService.service.IAdManageDataExpandService"
-		ref="adManageDataExpandService" timeout="120000" retries="0"/>
+		ref="adManageDataExpandService" timeout="120000" retries="0"/> -->
 
 </beans>

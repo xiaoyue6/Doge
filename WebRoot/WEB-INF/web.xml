@@ -6,7 +6,7 @@
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>AdsManageDataService.root</param-value>
+		<param-value>DogeMusicDataService.root</param-value>
 	</context-param>
 	<!-- LOG4J -->
 	<context-param>
@@ -45,9 +45,9 @@
 		<param-name>contextConfigLocation</param-name>
 		<!-- 主配置文件, 其余模块配置文件在app-context.xml进行加载 -->
 		<param-value>
-			classpath:com/better517na/config/spring/app-context.xml,
-			classpath:com/better517na/config/spring/app-context-mybatis.xml,
-			classpath:com/better517na/config/spring/app-context-service.xml
+			classpath:com/cuit/config/spring/app-context.xml,
+			classpath:com/cuit/config/spring/app-context-mybatis.xml,
+			classpath:com/cuit/config/spring/app-context-service.xml
 		</param-value>
 	</context-param>
 
@@ -56,7 +56,7 @@
 	</listener>
 	
 	<listener>
-		<listener-class>com.better517na.commons.listener.StartUpListener</listener-class>
+		<listener-class>com.cuit.commons.listener.StartUpListener</listener-class>
 	</listener>
 	<!-- spring 配置 end-->
 	
@@ -66,7 +66,7 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:com/better517na/config/spring/app-context-dispatcher.xml</param-value>
+			<param-value>classpath:com/cuit/config/spring/app-context-dispatcher.xml</param-value>
 		</init-param>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
