@@ -27,7 +27,7 @@
 	<!-- 乱码过滤器begin -->
 	<filter>
 		<filter-name>encoding</filter-name>
-		<filter-class>com.better517na.commons.filter.EncodingFilter</filter-class>
+		<filter-class>com.cuit.commons.filter.EncodingFilter</filter-class>
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
