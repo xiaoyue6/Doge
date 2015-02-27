@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.better517na.adsManageDataService.dao.IAdManageDataDao">
+
+
+
+
+	<!-- ========================================================================= -->
+	<!-- // 操作广告信息表 -->
+	<!-- ========================================================================= -->
+
+	<!--查询广告信息表 -->
+
+
+	<select id="selectAd" parameterType="com.better517na.adsManageDataService.model.bo.MAd"
+		resultType="com.better517na.adsManageDataService.model.vo.AdVo">
+		SELECT
+		AdID,AdCode,Title,Type,Content,Link,UploadTime,UploadUserID,Description,ModifyTime,UpdateUserID,IsDelete,LinkType,AdWidth,AdHeight
+		FROM AdInfo WHERE 1=1 and IsDelete =0
+		<if test="adID!=null and adID !=''">
+			and AdID = #{adID}
+		</if>
+		<if test="adCode!=null and adCode !=''">
+			and AdCode = #{adCode}
+		</if>
+		<if test="title!=null and title !=''">
+			and Title = #{title}
+		</if>
+		<if test="type!=null ">
+			and Type = #{type}
+		</if>
+		<if test="content!=null and content !=''">
+			and Content = #{content}
+		</if>
+		<if test="link!=null and link !=''">
+			and Link = #{link}
+		</if>
+		<if test="uploadTime!=null and uploadTime !=''">
+			and UploadTime = #{uploadTime}
+		</if>
+		<if test="uploadUserID!=null and uploadUserID !=''">
+			and UploadUserID = #{uploadUserID}
+		</if>
+		<if test="description!=null and description !=''">
+			and Description = #{description}
+		</if>
+		<if test="modifyTime!=null and modifyTime !=''">
+			and ModifyTime = #{modifyTime}
+		</if>
+		<if test="updateUserID!=null and updateUserID !=''">
+			and UpdateUserID = #{updateUserID}
+		</if>
+		<if test="linkType ">
+			and LinkType = #{linkType}
+		</if>
+		<if test="adWidth !=null">
+			and AdWidth = #{adWidth}
+		</if>
+		<if test="adHeight !=null">
+			and AdHeight = #{adHeight}
+		</if>
+	</select>
+
+	<!--更新广告信息表 -->
+	<update id="updateAd" parameterType="com.better517na.adsManageDataService.model.bo.MAd">
+		UPDATE AdInfo
+		<set>
+			<!-- <if test="adID!=null and adID !=''"> and AdID = #{adID} </if> -->
+			<if test="adCode!=null and adCode !=''">
+				AdCode = #{adCode},
+			</if>
+			<if test="title!=null and title !=''">
+				Title = #{title},
+			</if>
+			<if test="type!=null ">
+				Type = #{type},
+			</if>
+			<if test="content!=null and content !=''">
+				Content = #{content},
+			</if>
+			<if test="link!=null and link !=''">
+				Link = #{link},
+			</if>
+			<if test="uploadTime!=null and uploadTime !=''">
+				UploadTime = #{uploadTime},
+			</if>
+			<if test="uploadUserID!=null and uploadUserID !=''">
+				UploadUserID = #{uploadUserID},
+			</if>
+			<if test="description!=null and description !=''">
+				Description = #{description},
+			</if>
+			<if test="modifyTime!=null and modifyTime !=''">
+				ModifyTime = #{modifyTime},
+			</if>
+			<if test="updateUserID!=null and updateUserID !=''">
+				UpdateUserID = #{updateUserID},
+			</if>
+			<if test="isDelete!=null ">
+				IsDelete = #{isDelete},
+			</if>
+			<if test="linkType !=null ">
+				LinkType = #{linkType},
+			</if>
+			<if test="adWidth !=null ">
+				AdWidth = #{adWidth},
+			</if>
+			<if test="adHeight !=null ">
+				AdHeight = #{adHeight}
+			</if>
+		</set>
+		WHERE AdID= #{adID}
+	</update>
+
+	<!--插入广告信息表 -->
+	<insert id="insertAd" parameterType="com.better517na.adsManageDataService.model.bo.MAd" 
+	>
+		insert
+		into AdInfo
+		(
+		AdID,
+		AdCode,
+		Title,
+		Type,
+		Content,
+		Link,
+		UploadTime,
+		UploadUserID,
+		Description,
+		<!-- ModifyTime, -->
+		UpdateUserID,
+		IsDelete,
+		LinkType,
+		AdWidth,
+		AdHeight)
+		values(#{adID},#{adCode},#{title},#{type},#{content},#{link},#{uploadTime},
+		#{uploadUserID},#{description},
+		<!-- #{modifyTime}, -->
+		#{updateUserID},#{isDelete},#{linkType},#{adWidth},#{adHeight})
+	</insert>
+
+
+
+
+
+	<!-- ========================================================================= -->
+	<!-- // 操作广告位基础信息表 -->
+	<!-- ========================================================================= -->
+
+	<!-- 查询广告位基础信息表 -->
+
+	<select id="selectSpace"
+		parameterType="com.better517na.adsManageDataService.model.bo.MSpace"
+		resultType="com.better517na.adsManageDataService.model.vo.SpaceVo">
+		SELECT
+		SpaceID,SpaceCode,SpaceName,ChannelID,PlatformID,SpaceType,SpaceWidth
+		SpaceHeight,PathDes,SpaceSizeRule,IsOpen,CreateTime,CreateUserID,ModifyTime,UpdateUserID,IsDelete
+		FROM
+		SpaceInfo WHERE 1=1 and IsDelete =0
+		<if test="spaceID !=null ">
+			and SpaceID = #{spaceID}
+		</if>
+		<if test="spaceCode!=null and spaceCode !=''">
+			and SpaceCode = #{spaceCode}
+		</if>
+		<if test="spaceName!=null and spaceName !=''">
+			and SpaceName = #{spaceName}
+		</if>
+		<if test="channelID!=null">
+			and ChannelID = #{channelID}
+		</if>
+		<if test="platformID !=null ">
+			and PlatformID = #{platformID}
+		</if>
+		<if test="spaceType !=null and spaceType !=''">
+			and SpaceType = #{spaceType}
+		</if>
+		<if test="spaceWidth !=null ">
+			and SpaceWidth = #{spaceWidth}
+		</if>
+		<if test="spaceHeight !=null ">
+			and SpaceHeight = #{spaceHeight}
+		</if>
+		<if test="pathDes !=null and pathDes !=''">
+			and PathDes = #{pathDes}
+		</if>
+		<if test="spaceSizeRule !=null and spaceSizeRule !=''">
+			and SpaceSizeRule = #{spaceSizeRule}
+		</if>
+		<if test="isOpen !=null ">
+			and IsOpen = #{isOpen}
+		</if>
+		<if test="createTime !=null and createTime !=''">
+			and CreateTime = #{createTime}
+		</if>
+		<if test="createUserID !=null and createUserID !=''">
+			and CreateUserID = #{createUserID}
+		</if>
+		<if test="updateUserID !=null and updateUserID !=''">
+			and UpdateUserID = #{updateUserID}
+		</if>
+	</select>
+
+	<!-- 更新广告位基础信息表 -->
+
+	<update id="updateSpace"
+		parameterType="com.better517na.adsManageDataService.model.bo.MSpace">
+		UPDATE SpaceInfo
+		<set>
+			<if test="spaceCode!=null and spaceCode !=''">
+				SpaceCode = #{spaceCode},
+			</if>
+			<if test="spaceName!=null and spaceName !=''">
+				SpaceName = #{spaceName},
+			</if>
+			<if test="channelID!=null ">
+				ChannelID = #{channelID},
+			</if>
+			<if test="platformID !=null ">
+				PlatformID = #{platformID},
+			</if>
+			<if test="spaceType !=null and spaceType !=''">
+				SpaceType = #{spaceType},
+			</if>
+			<if test="spaceWidth !=null ">
+				SpaceWidth = #{spaceWidth},
+			</if>
+			<if test="spaceHeight !=null ">
+				SpaceHeight = #{spaceHeight},
+			</if>
+			<if test="pathDes !=null and pathDes !=''">
+				PathDes = #{pathDes},
+			</if>
+			<if test="spaceSizeRule !=null and spaceSizeRule !=''">
+				SpaceSizeRule = #{spaceSizeRule},
+			</if>
+			<if test="isOpen !=null ">
+				IsOpen = #{isOpen},
+			</if>
+			<if test="createTime !=null and createTime !=''">
+				CreateTime = #{createTime},
+			</if>
+			<if test="createUserID !=null and createUserID !=''">
+				CreateUserID = #{createUserID},
+			</if>
+			<if test="updateUserID !=null and updateUserID !=''">
+				UpdateUserID = #{updateUserID},
+			</if>
+			<if test="isDelete !=null ">
+				IsDelete = #{isDelete}
+			</if>
+		</set>
+		WHERE SpaceID = #{spaceID}
+	</update>
+
+	<!-- 插入广告位基础信息表 -->
+
+	<insert id="insertSpace"
+		parameterType="com.better517na.adsManageDataService.model.bo.MSpace">
+		insert
+		into SpaceInfo
+		(
+		<!-- SpaceID, -->
+		SpaceID,
+		SpaceCode,
+		SpaceName,
+		ChannelID,
+		PlatformID,
+		SpaceType,
+
+		SpaceWidth,
+		SpaceHeight,
+		PathDes,
+		SpaceSizeRule,
+		IsOpen,
+		CreateTime,
+		CreateUserID,
+		UpdateUserID,
+		IsDelete)
+		values( #{spaceID},
+		#{spaceCode},#{spaceName},#{channelID},#{platformID},#{spaceType},
+		#{spaceWidth},#{spaceHeight},#{pathDes},#{spaceSizeRule},#{isOpen},
+		#{createTime},#{createUserID},#{updateUserID},#{isDelete})
+	</insert>
+
+
+	<!-- ========================================================================= -->
+	<!-- // 操作广告广告位关系表 -->
+	<!-- ========================================================================= -->
+
+
+	<!-- 查询广告广告位关系表 -->
+	<select id="selectAdSpace"
+		parameterType="com.better517na.adsManageDataService.model.bo.MAdSpace"
+		resultType="com.better517na.adsManageDataService.model.vo.AdSpaceVo">
+		SELECT
+		AdSpaceID,AdID,SpaceID,StartTime,EndTime,CreateTime,CreateUserID,ModifyTime,
+		UpdateUserID,Status,IsDelete
+		FROM
+		AdSpaceRela WHERE 1=1 and IsDelete =0
+		<if test="adSpaceID !=null and adSpaceID !=''">
+			and AdSpaceID = #{adSpaceID}
+		</if>
+		<if test="adID !=null ">
+			and AdID = #{adID}
+		</if>
+		<if test="spaceID !=null ">
+			and SpaceID = #{spaceID}
+		</if>
+		<if test="startTime !=null and startTime !=''">
+			and StartTime = #{startTime}
+		</if>
+		<if test="endTime !=null and endTime !=''">
+			and EndTime = #{endTime}
+		</if>
+		<if test="createTime !=null and createTime !=''">
+			and CreateTime = #{createTime}
+		</if>
+		<if test="createUserID !=null ">
+			and CreateUserID = #{createUserID}
+		</if>
+		<if test="modifyTime !=null and modifyTime !=''">
+			and ModifyTime = #{modifyTime}
+		</if>
+		<if test="updateUserID !=null and updateUserID !=''">
+			and UpdateUserID = #{updateUserID}
+		</if>
+		<if test="status !=null and status !=''">
+			and Status = #{status}
+		</if>
+	</select>
+
+	<!-- 更新广告广告位关系表 -->
+	<update id="updateAdSpace"
+		parameterType="com.better517na.adsManageDataService.model.bo.MAdSpace">
+		UPDATE AdSpaceRela
+		<set>
+			<!-- <if test="adSpaceID !=null and adSpaceID !=''"> and AdSpaceID = #{adSpaceID} 
+				</if> -->
+			<if test="adID !=null ">
+				AdID = #{adID},
+			</if>
+			<if test="spaceID !=null">
+				SpaceID = #{spaceID},
+			</if>
+			<if test="startTime !=null and startTime !=''">
+				StartTime = #{startTime},
+			</if>
+			<if test="endTime !=null and endTime !=''">
+				EndTime = #{endTime},
+			</if>
+			<if test="createTime !=null and createTime !=''">
+				CreateTime = #{createTime},
+			</if>
+			<if test="createUserID !=null ">
+				CreateUserID = #{createUserID},
+			</if>
+			<if test="updateUserID !=null and updateUserID !=''">
+				UpdateUserID = #{updateUserID},
+			</if>
+			<if test="status !=null and status !=''">
+				Status = #{status},
+			</if>
+			<if test="publishTime !=null and publishTime!=''">
+				PublishTime = #{publishTime}
+			</if>
+			<if test="isDelete !=null ">
+				IsDelete = #{isDelete}
+			</if>
+		</set>
+		Where 1=1
+		<if test="adSpaceID !=null ">
+			and AdSpaceID = #{adSpaceID}
+		</if>
+	</update>
+
+	<!-- 插入广告广告位关系表 -->
+
+	<insert id="insertAdSpace"
+		parameterType="com.better517na.adsManageDataService.model.bo.MAdSpace">
+		insert
+		into AdSpaceRela
+		(
+		AdSpaceID,
+		AdID,
+		SpaceID,
+		StartTime,
+		EndTime,
+		CreateTime,
+		CreateUserID,
+		UpdateUserID,
+		Status,
+		IsDelete,
+		PublishTime
+		)
+		values(#{adSpaceID},#{adID},#{spaceID},#{startTime},#{endTime},#{createTime},
+		#{createUserID},#{updateUserID},
+		#{status},0,now())
+	</insert>
+
+
+
+	<!-- ,#{},#{},#{},#{},#{},#{},#{}, -->
+	<!-- ========================================================================= -->
+	<!-- // 操作广告广告位投视图表 -->
+	<!-- ========================================================================= -->
+
+
+
+	<!-- 查询广告广告位投视图表 -->
+	<select id="selectAdSpaceView"
+		parameterType="com.better517na.adsManageDataService.model.bo.MAdSpaceView"
+		resultType="com.better517na.adsManageDataService.model.vo.AdSpaceViewVo">
+		SELECT
+		AdSpaceViewID,AdID,SpaceID,Day,ModifyTime,IsDelete,AdSpaceID
+		FROM
+		AdSpaceView WHERE 1=1 and IsDelete =0
+		<if test="adSpaceViewID !=null ">
+			and AdSpaceViewID = #{adSpaceViewID}
+		</if>
+		<if test="adID !=null ">
+			and AdID = #{adID}
+		</if>
+		<if test="spaceID !=null ">
+			and SpaceID = #{spaceID}
+		</if>
+		<if test="adSpaceID !=null ">
+			and AdSpaceID = #{adSpaceID}
+		</if>
+		<if test="day !=null and day !=''">
+			and Day = #{day}
+		</if>
+		<if test="modifyTime !=null and modifyTime !=''">
+			and ModifyTime = #{modifyTime}
+		</if>
+	</select>
+
+	<!-- 更新广告广告位投视图表 -->
+
+	<update id="updateAdSpaceView"
+		parameterType="com.better517na.adsManageDataService.model.bo.MAdSpaceView">
+		UPDATE AdSpaceView
+		<set>
+			<!-- <if test="adSpaceViewID !=null and adSpaceViewID !=''"> and AdSpaceViewID 
+				= #{adSpaceViewID} </if> -->
+			<if test="adID !=null ">
+				AdID = #{adID},
+			</if>
+			<if test="spaceID !=null ">
+				SpaceID = #{spaceID},
+			</if>
+			<if test="adSpaceID !=null ">
+				AdSpaceID = #{adSpaceID},
+			</if>
+			<if test="day !=null and day !=''">
+				Day = #{day},
+			</if>
+			<if test="isDelete !=null ">
+				IsDelete = #{isDelete}
+			</if>
+		</set>
+		where AdSpaceID = #{adSpaceID}
+	</update>
+
+	<!-- 插入广告广告位投视图表 -->
+	<insert id="insertAdSpaceView"
+		parameterType="com.better517na.adsManageDataService.model.bo.MAdSpaceView">
+		insert
+		into AdSpaceView
+		(
+		AdSpaceViewID,
+		AdID,
+		SpaceID,
+		Day,
+		ModifyTime,
+		IsDelete,
+		AdSpaceID)
+		values(#{adSpaceViewID},#{adID},#{spaceID},#{day},now(),0,#{adSpaceID})
+	</insert>
+
+
+
+
+	<!-- ,#{},#{},#{},#{},#{},#{},#{}, -->
+	<!-- ========================================================================= -->
+	<!-- // 操作频道平台关系表 -->
+	<!-- ========================================================================= -->
+
+
+	<!-- 插入频道平台关系表 -->
+	<select id="selectChannelPlatform"
+		parameterType="com.better517na.adsManageDataService.model.bo.MChannelPlatform"
+		resultType="com.better517na.adsManageDataService.model.vo.ChannelPlatformVo">
+		SELECT
+		ChannelPlatformID,ChannelID,PlatformID,ModifyTime,IsDelete
+		FROM
+		ChannelPlatformRela WHERE 1=1 and IsDelete = 0
+		<if test="channelPlatformID !=null">
+			and ChannelPlatformID = #{channelPlatformID}
+		</if>
+		<if test="channelID !=null">
+			and ChannelID = #{channelID}
+		</if>
+		<if test="platformID !=null ">
+			and PlatformID = #{platformID}
+		</if>
+		<if test="modifyTime !=null and modifyTime !=''">
+			and ModifyTime = #{modifyTime}
+		</if>
+		<!-- <if test="isDelete !=null "> and IsDelete = #{isDelete} </if> -->
+	</select>
+
+	<!-- 更新频道平台关系表 -->
+	<update id="updateChannelPlatform"
+		parameterType="com.better517na.adsManageDataService.model.bo.MChannelPlatform">
+		UPDATE ChannelPlatformRela
+		<set>
+			<!-- <if test="channelPlatformID !=null and channelPlatformID !=''"> and 
+				ChannelPlatformID = #{channelPlatformID} </if> -->
+			<if test="channelID !=null ">
+				ChannelID = #{channelID},
+			</if>
+			<if test="platformID !=null ">
+				PlatformID = #{platformID},
+			</if>
+			<if test="isDelete !=null ">
+				IsDelete = #{isDelete}
+			</if>
+		</set>
+		where ChannelID = #{channelID} and PlatformID = #{platformID}
+	</update>
+
+	<!-- 插入频道平台关系表 -->
+	<insert id="insertChannelPlatform"
+		parameterType="com.better517na.adsManageDataService.model.bo.MChannelPlatform">
+		insert
+		into ChannelPlatformRela
+		(
+		ChannelPlatformID,
+		ChannelID,
+		PlatformID,
+		IsDelete)
+		values(#{channelPlatformID},#{channelID},#{platformID},#{isDelete})
+	</insert>
+
+
+
+	<!-- ,#{},#{},#{},#{},#{},#{},#{}, -->
+	<!-- ========================================================================= -->
+	<!-- // 操作频道基础信息表 -->
+	<!-- ========================================================================= -->
+
+	<!-- 查询频道基础信息表 -->
+	<select id="selectChannel"
+		parameterType="com.better517na.adsManageDataService.model.bo.MChannel"
+		resultType="com.better517na.adsManageDataService.model.vo.ChannelVo">
+		SELECT
+		ChannelID,ChannelCode,ChannelName,Description,ModifyTime,UpdateUserID,IsOpen,IsDelete
+		FROM
+		ChannelInfo WHERE 1=1 and IsDelete =0
+		<if test="channelId !=null ">
+			and ChannelID = #{channelId}
+		</if>
+		<if test="channelCode !=null and channelCode !=''">
+			and ChannelCode = #{channelCode}
+		</if>
+		<if test="channelName !=null and channelName !=''">
+			and ChannelName = #{channelName}
+		</if>
+		<if test="description !=null and description !=''">
+			and Description = #{description}
+		</if>
+		<if test="modifyTime !=null and modifyTime !=''">
+			and ModifyTime = #{modifyTime}
+		</if>
+		<if test="updateUserID !=null and updateUserID !=''">
+			and UpdateUserID = #{updateUserID}
+		</if>
+		<if test="isOpen !=null ">
+			and IsOpen = #{isOpen}
+		</if>
+	</select>
+
+	<!-- 更新频道基础信息表 -->
+	<update id="updateChannel"
+		parameterType="com.better517na.adsManageDataService.model.bo.MChannel">
+		UPDATE ChannelInfo
+		<set>
+			<!-- <if test="channelID !=null and channelID !=''"> and ChannelID = #{channelID} 
+				</if> -->
+			<if test="channelCode !=null and channelCode !=''">
+				ChannelCode = #{channelCode},
+			</if>
+			<if test="channelName !=null and channelName !=''">
+				ChannelName = #{channelName},
+			</if>
+			<if test="description !=null and description !=''">
+				Description = #{description},
+			</if>
+			<if test="modifyTime !=null and modifyTime !=''">
+				ModifyTime = #{modifyTime},
+			</if>
+			<if test="updateUserID !=null and updateUserID !=''">
+				UpdateUserID = #{updateUserID},
+			</if>
+			<if test="isOpen !=null">
+				IsOpen = #{isOpen},
+			</if>
+			<if test="isDelete !=null ">
+				IsDelete = #{isDelete}
+			</if>
+		</set>
+		where ChannelID = #{channelId}
+	</update>
+
+	<!-- 插入频道基础信息表 -->
+	<insert id="insertChannel"
+		parameterType="com.better517na.adsManageDataService.model.bo.MChannel">
+		insert
+		into ChannelInfo
+		(
+		ChannelID,
+		ChannelCode,
+		ChannelName,
+		Description,
+		ModifyTime,
+		UpdateUserID,
+		IsOpen,
+		IsDelete)
+		values(#{channelId},#{channelCode},#{channelName},#{description},
+		#{modifyTime},#{updateUserID},#{isOpen},#{isDelete})
+	</insert>
+
+
+
+	<!-- ,#{},#{},#{},#{},#{},#{},#{}, -->
+	<!-- ========================================================================= -->
+	<!-- // 操作广告操作日志表 -->
+	<!-- ========================================================================= -->
+
+
+	<!-- 查询广告操作日志表 -->
+	<select id="selectAdOperLog"
+		parameterType="com.better517na.adsManageDataService.model.bo.MAdOperLog"
+		resultType="com.better517na.adsManageDataService.model.vo.AdOperLogVo">
+		SELECT
+		AdOperLogID,LogInfo,UserID,UserName,OperTime,ModifyTime,IsDelete
+		FROM
+		AdOperLog WHERE 1=1 and IsDelete =0
+		<if test="adOperLogID !=null ">
+			and AdOperLogID = #{adOperLogID}
+		</if>
+		<if test="logInfo !=null and logInfo !=''">
+			and LogInfo = #{logInfo}
+		</if>
+		<if test="userID !=null and userID !=''">
+			and UserID = #{userID}
+		</if>
+		<if test="userName !=null and userName !=''">
+			and UserName = #{userName}
+		</if>
+		<if test="operTime !=null and operTime !=''">
+			and OperTime = #{operTime}
+		</if>
+		<if test="modifyTime !=null and modifyTime !=''">
+			and ModifyTime = #{modifyTime}
+		</if>
+	</select>
+
+	<!-- 更新广告操作日志表 -->
+	<update id="updateAdOperLog"
+		parameterType="com.better517na.adsManageDataService.model.bo.MAdOperLog">
+		UPDATE AdOperLog
+		<set>
+			<!-- <if test="adOperLogID !=null and adOperLogID !=''"> and AdOperLogID 
+				= #{adOperLogID} </if> -->
+			<if test="logInfo !=null and logInfo !=''">
+				LogInfo = #{logInfo},
+			</if>
+			<if test="userID !=null and userID !=''">
+				UserID = #{userID},
+			</if>
+			<if test="userName !=null and userName !=''">
+				UserName = #{userName},
+			</if>
+			<if test="operTime !=null and operTime !=''">
+				OperTime = #{operTime},
+			</if>
+			<if test="modifyTime !=null and modifyTime !=''">
+				ModifyTime = #{modifyTime},
+			</if>
+			<if test="isDelete !=null ">
+				IsDelete = #{isDelete}
+			</if>
+		</set>
+		where AdOperLogID= #{adOperLogID}
+	</update>
+
+	<!-- 插入广告操作日志表 -->
+	<insert id="insertAdOperLog"
+		parameterType="com.better517na.adsManageDataService.model.bo.MAdOperLog">
+		insert
+		into AdOperLog
+		(
+		AdOperLogID,
+		LogInfo,
+		UserID,
+		UserName,
+		OperTime,
+		ModifyTime,
+		IsDelete)
+		values(#{adOperLogID},#{logInfo},#{userID},#{userName},#{operTime},#{modifyTime},
+		0)
+	</insert>
+
+
+	<!-- ,#{},#{},#{},#{},#{},#{},#{}, -->
+	<!-- ========================================================================= -->
+	<!-- // 操作平台基础信息表 -->
+	<!-- ========================================================================= -->
+
+
+
+	<!-- 查询平台基础信息表 -->
+	<select id="selectPlatform"
+		parameterType="com.better517na.adsManageDataService.model.bo.MPlatform"
+		resultType="com.better517na.adsManageDataService.model.vo.PlatformVo">
+		SELECT
+		PlatformID,PlatformCode,PlatformName,Description,ModifyTime,UpdateUserID,IsOpen,IsDelete
+		FROM
+		PlatformInfo WHERE 1=1 and IsDelete = 0
+		<if test="platformID !=null ">
+			and PlatformID = #{platformID}
+		</if>
+		<if test="platformCode !=null and platformCode !=''">
+			and PlatformCode = #{platformCode}
+		</if>
+		<if test="platformName !=null and platformName !=''">
+			and PlatformName = #{platformName}
+		</if>
+		<if test="description !=null and description !=''">
+			and Description = #{description}
+		</if>
+		<if test="modifyTime !=null and modifyTime !=''">
+			and ModifyTime = #{modifyTime}
+		</if>
+		<if test="updateUserID !=null and updateUserID !=''">
+			and UpdateUserID = #{updateUserID}
+		</if>
+		<if test="isOpen !=null ">
+			and IsOpen = #{isOpen}
+		</if>
+
+	</select>
+
+	<!-- 查询平台基础信息表 -->
+
+	<update id="updatePlatform"
+		parameterType="com.better517na.adsManageDataService.model.bo.MPlatform">
+		UPDATE PlatformInfo
+		<set>
+			<!-- <if test="platformID !=null and platformID !=''"> and PlatformID 
+				= #{platformID} </if> -->
+			<if test="platformCode !=null and platformCode !=''">
+				PlatformCode = #{platformCode},
+			</if>
+			<if test="platformName !=null and platformName !=''">
+				PlatformName = #{platformName},
+			</if>
+			<if test="description !=null and description !=''">
+				Description = #{description},
+			</if>
+			<if test="modifyTime !=null and modifyTime !=''">
+				ModifyTime = #{modifyTime},
+			</if>
+			<if test="updateUserID !=null and updateUserID !=''">
+				UpdateUserID = #{updateUserID},
+			</if>
+			<!-- <if test="isOpen !=null "> IsOpen = #{isOpen}, </if> -->
+			<if test="isOpen !=null ">
+				IsOpen = #{isOpen},
+			</if>
+			<if test="isDelete !=null ">
+				IsDelete = #{isDelete}
+			</if>
+		</set>
+		where PlatformID = #{platformID}
+	</update>
+
+	<!-- 插入平台基础信息表 -->
+	<insert id="insertPlatform"
+		parameterType="com.better517na.adsManageDataService.model.bo.MPlatform">
+		insert
+		into PlatformInfo
+		(
+		PlatformID,
+		PlatformCode,
+		PlatformName,
+		Description,
+		UpdateUserID,
+		IsOpen,
+		IsDelete)
+		values(#{platformID},#{platformCode},#{platformName},#{description},#{updateUserID},#{isOpen},#{isDelete})
+	</insert>
+	<!-- 分页查询平台基础信息表 -->
+	<select id="selectPlatformByPage"
+		parameterType="com.better517na.adsManageDataService.model.bo.MPlatform"
+		resultType="com.better517na.adsManageDataService.model.vo.PlatformVo">
+		SELECT
+		PlatformID,PlatformCode,PlatformName,Description,ModifyTime,UpdateUserID,IsOpen,IsDelete
+		FROM
+		PlatformInfo WHERE 1=1 and IsDelete = 0
+		<if test="platformID !=null ">
+			and PlatformID = #{platformID}
+		</if>
+		<if test="platformCode !=null and platformCode !=''">
+			and PlatformCode = #{platformCode}
+		</if>
+		<if test="platformName !=null and platformName !=''">
+			and PlatformName = #{platformName}
+		</if>
+		<if test="description !=null and description !=''">
+			and Description = #{description}
+		</if>
+		<if test="modifyTime !=null and modifyTime !=''">
+			and ModifyTime = #{modifyTime}
+		</if>
+		<if test="updateUserID !=null and updateUserID !=''">
+			and UpdateUserID = #{updateUserID}
+		</if>
+		<if test="isOpen !=null ">
+			and IsOpen = #{isOpen}
+		</if>
+		ORDER BY PlatformCode
+	</select>
+	<!-- 分页查询频道基础信息表 -->
+	<select id="selectChannelByPage"
+		parameterType="com.better517na.adsManageDataService.model.bo.MChannel"
+		resultType="com.better517na.adsManageDataService.model.vo.ChannelVo">
+		SELECT
+		ChannelID,ChannelCode,ChannelName,Description,ModifyTime,UpdateUserID,IsOpen,IsDelete
+		FROM
+		ChannelInfo WHERE 1=1 and IsDelete =0
+		<if test="channelId !=null ">
+			and ChannelID = #{channelId}
+		</if>
+		<if test="channelCode !=null and channelCode !=''">
+			and ChannelCode = #{channelCode}
+		</if>
+		<if test="channelName !=null and channelName !=''">
+			and ChannelName = #{channelName}
+		</if>
+		<if test="description !=null and description !=''">
+			and Description = #{description}
+		</if>
+		<if test="modifyTime !=null and modifyTime !=''">
+			and ModifyTime = #{modifyTime}
+		</if>
+		<if test="updateUserID !=null and updateUserID !=''">
+			and UpdateUserID = #{updateUserID}
+		</if>
+		<if test="isOpen !=null ">
+			and IsOpen = #{isOpen}
+		</if>
+		ORDER BY ChannelCode
+	</select>
+</mapper>

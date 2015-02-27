@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper 
+	namespace="com.better517na.adsManageDataService.dao.IAdManageDataExpandDao">
+	<resultMap
+		type="com.better517na.adsManageDataService.model.vo.SpaceReturnVo" id="SpaceReturnVo">
+		<result property="spaceID" column="SpaceID" />
+		<result property="spaceCode" column="SpaceCode" />
+		<result property="name" column="SpaceName" />
+		<result property="channelID" column="ChannelID" />
+		<result property="channelName" column="ChannelName" />
+		<result property="platformID" column="PlatformID" />
+		<result property="platformName" column="PlatformName" />
+		<result property="spaceType" column="SpaceType" />
+		<result property="spaceWidth" column="SpaceWidth" />
+		<result property="spaceHeight" column="SpaceHeight" />
+		<result property="pathDes" column="PathDes" />
+		<result property="occupancy" column="Status" />
+		<result property="startTime" column="StartTime" />
+		<result property="endTime" column="EndTime" />
+		<result property="adID" column="AdID" />
+		<result property="isOpen" column="IsOpen" />
+		<result property="modifyTime" column="ModifyTime" />
+		<result property="updateUserID" column="UpdateUserID" />
+		<result property="spaceSizeRule" column="SpaceSizeRule" />
+	</resultMap>
+	<resultMap
+		type="com.better517na.adsManageDataService.model.vo.AdSpaceInfoVo" id="AdSpaceInfoVo">
+		<result property="adId" column="AdId" />
+		<result property="adContent" column="Content" />
+		<result property="adLink" column="Link" />
+		<result property="adSpaceEndTime" column="EndTime" />
+		<result property="adTitle" column="Title" />
+		<result property="adType" column="Type" />
+		<result property="spaceType" column="SpaceType" />
+		<result property="spaceCode" column="SpaceCode" />
+		<result property="spaceName" column="SpaceName" />
+		<result property="pathDes" column="PathDes" />
+		<result property="spaceWidth" column="SpaceWidth" />
+		<result property="spaceHeight" column="SpaceHeight" />
+		<result property="channelCode" column="ChannelCode" />
+		<result property="channelName" column="ChannelName" />
+		<result property="platformCode" column="PlatformCode" />
+		<result property="platformName" column="PlatformName" />
+	</resultMap>
+	<!-- 查询已关联和已发布广告的属性映射到数据库的字段 -->
+	<resultMap
+		type="com.better517na.adsManageDataService.model.vo.SearchRelationedRAdsVo"
+		id="RelationedRAds">
+		<result property="adCode" column="AdCode" />
+		<result property="type" column="Type" />
+		<result property="title" column="Title" />
+		<result property="content" column="Content" />
+		<result property="link" column="Link" />
+		<result property="spaceCode" column="SpaceCode" />
+		<result property="startTime" column="StartTime" />
+		<result property="endTime" column="EndTime" />
+		<result property="status" column="Status" />
+		<result property="createTime" column="CreateTime" />
+		<result property="createUserID" column="CreateUserID" />
+		<result property="modifyTime" column="ModifyTime" />
+		<result property="updateUserID" column="UpdateUserID" />
+		<result property="channelName" column="ChannelName" />
+		<result property="platformName" column="PlatformName" />
+		<result property="pathDes" column="PathDes" />
+		<result property="adSpaceID" column="AdSpaceID" />
+		<result property="publishTime" column="PublishTime" />
+		<result property="adID" column="AdID" />
+		<result property="adWidth" column="AdWidth" />
+		<result property="adHeight" column="AdHeight" />
+		<result property="spaceName" column="SpaceName" />
+		<result property="spaceSizeRule" column="SpaceSizeRule" />
+		<result property="spaceWidth" column="SpaceWidth" />
+		<result property="spaceHeight" column="SpaceHeight" />
+		<result property="uploadUserID" column="UploadUserID" />
+	</resultMap>
+	<!-- 结束标志 -->
+	<!-- 查询广告库中的广告 -->
+	<resultMap
+		type="com.better517na.adsManageDataService.model.vo.SearchAdsReturnVo"
+		id="AdsReturnVo">
+		<result property="adCode" column="AdCode" />
+		<result property="type" column="Type" />
+		<result property="title" column="Title" />
+		<result property="content" column="Content" />
+		<result property="link" column="Link" />
+		<result property="status" column="Status" />
+		<result property="uploadTime" javaType="Date" column="UploadTime" />
+		<result property="uploadUserID" column="UploadUserID" />
+		<result property="lastModifyTime" column="ModifyTime" />
+		<result property="linkType" column="LinkType" />
+		<result property="adWidth" column="AdWidth" />
+		<result property="adHeight" column="AdHeight" />
+		<result property="updateUserID" column="UpdateUserID" />
+		<result property="adID" column="AdID" />
+	</resultMap>
+	<!-- 结束标志 -->
+	<select id="findTodayAdSpace" resultMap="AdSpaceInfoVo">
+		SELECT
+			a.AdID,
+			a.Content,
+			a.Link,
+			UNIX_TIMESTAMP(ads.EndTime) EndTime,
+			a.Title,
+			a.Type,
+			s.SpaceType,
+			s.SpaceCode,
+			s.SpaceName,
+			s.PathDes,
+			s.SpaceWidth,
+			s.SpaceHeight,
+			c.ChannelCode,
+			c.ChannelName,
+			p.PlatformCode,
+			p.PlatformName
+		FROM
+			AdSpaceRela ads
+		LEFT JOIN SpaceInfo s ON ads.SpaceID = s.SpaceID
+		LEFT JOIN AdInfo a ON a.AdID = ads.AdID
+		LEFT JOIN ChannelInfo c ON s.ChannelID = c.ChannelID
+		LEFT JOIN PlatformInfo p ON p.PlatformID = s.PlatformID
+		WHERE
+			ads.`Status` = '正在投放'
+		AND ads.IsDelete = 0
+	</select>
+	<!-- 查询广告位投视图 -->
+	<select id="findAdSpaceViewByPage"
+		parameterType="com.better517na.adsManageDataService.model.vo.AdSpaceViewParamVo"
+		resultType="com.better517na.adsManageDataService.model.vo.AdSpaceViewReturnVo">
+		select
+		s.SpaceID,s.SpaceCode,s.SpaceWidth,s.SpaceHeight,s.SpaceName,s.PathDes,s.SpaceSizeRule,s.IsOpen
+		FROM SpaceInfo s
+		where 1=1 and s.IsDelete=0
+		<if test="channelID!=null and channelID!=''">
+			and s.ChannelID=#{channelID}
+		</if>
+		<if test="platformID!=null and platformID!=''">
+			and s.PlatformID=#{platformID}
+		</if>
+	</select>
+	<!-- 查询广告位 -->
+	<select id="findAdSpace"
+		parameterType="com.better517na.adsManageDataService.model.vo.SpaceParamVo"
+		resultMap="SpaceReturnVo">
+		select tb.SpaceSizeRule,tb.SpaceID,tb.SpaceCode,tb.SpaceName,tb.ChannelName,tb.PlatformName,tb.SpaceType,tb.SpaceWidth,tb.SpaceHeight,tb.PathDes,tb.Status,tb.IsOpen,tb.ModifyTime,tb.UpdateUserID,
+		tb.StartTime,tb.EndTime,tb.AdID from (select
+		t.SpaceSizeRule,t.SpaceID,t.SpaceCode,t.SpaceName,t.ChannelName,t.PlatformName,t.SpaceType,t.SpaceWidth,t.SpaceHeight,t.PathDes,t.Status,t.IsOpen,t.ModifyTime,t.UpdateUserID,
+		t.StartTime,t.EndTime,t.AdID
+		from (select
+		s.SpaceSizeRule,s.SpaceID,s.SpaceCode,s.SpaceName,c.ChannelName,p.PlatformName,s.SpaceType,s.SpaceWidth,s.SpaceHeight,s.PathDes,ads.Status,s.IsOpen,s.ModifyTime,s.UpdateUserID,
+		ads.StartTime,ads.EndTime,ads.AdID
+		FROM SpaceInfo s left join (select
+		ads.SpaceID,ads.Status,ads.UpdateUserID,
+		ads.StartTime,ads.EndTime,ads.AdID from AdSpaceRela ads where
+		ads.EndTime>=NOW() and ads.IsDelete=0) ads ON s.SpaceID =ads.SpaceID
+		LEFT JOIN AdInfo a ON ads.AdID=a.AdID
+		LEFT JOIN ChannelInfo c on s.ChannelID=c.ChannelID
+		LEFT JOIN PlatformInfo p ON s.PlatformID=p.PlatformID
+		where 1=1 and s.IsDelete=0
+		<if test="channelID!=null">
+			and s.ChannelID=#{channelID}
+		</if>
+		<if test="platformID!=null">
+			and s.PlatformID=#{platformID}
+		</if>
+		<if test="isOpen!=null">
+			and s.IsOpen=#{isOpen}
+		</if>
+		ORDER BY s.SpaceID,FIND_IN_SET(ads.`Status`,'正在投放,准备投放,投放完毕,异常下架,待审核')) t 
+		GROUP BY t.SpaceID) tb
+		<if test="status!=null and status!='' and status=='已占用'">
+			where tb.Status='正在投放'
+		</if>
+		<if test="status!=null and status!='' and status=='空闲'">
+			where (tb.Status!='正在投放' or tb.`Status` is null)
+		</if>
+        ORDER BY tb.ModifyTime DESC
+	</select>
+
+
+	<select id="findAdSpaceViewDayByPage" parameterType="Map"
+		resultType="Date">
+
+		select Day from AdSpaceView where IsDelete=0 and SpaceID=#{spaceID}
+		<if test="cycle!=null and cycle!=''">
+			and DATE_FORMAT(Day,'%Y-%m')=#{cycle}
+		</if>
+
+	</select>
+	<!-- 查询已关联和已发布的广告的SQL语句 -->
+	<select id="serachRelationAds" parameterType="java.util.Map"
+		resultMap="RelationedRAds">
+		select
+		a.AdWidth,a.AdHeight,a.AdID,a.AdCode,a.Type,a.Title,a.Content,a.Link,a.UploadUserID,s.SpaceCode,ads.StartTime,ads.EndTime,ads.Status,ads.CreateTime,ads.CreateUserID,ads.ModifyTime,
+		ads.UpdateUserID,s.SpaceID,s.SpaceName,s.SpaceSizeRule,s.SpaceWidth,s.SpaceHeight,s.PathDes,c.ChannelName,p.PlatformName,ads.AdSpaceID,ads.PublishTime
+		FROM AdSpaceRela ads left join SpaceInfo s ON ads.SpaceID=s.SpaceID
+		LEFT JOIN AdInfo a ON a.AdID=ads.AdID
+		LEFT JOIN ChannelInfo c on s.ChannelID=c.ChannelID
+		LEFT JOIN PlatformInfo p ON p.PlatformID=s.PlatformID
+		where 1=1 and ads.IsDelete=0
+		<if test="adID!=null and adID!=''">
+			and a.AdID=#{adID}
+		</if>
+		<if test="channelID!=null and channelID!=''">
+			and s.ChannelID=#{channelID}
+		</if>
+		<if test="platformID!=null and platformID!=''">
+			and s.PlatformID=#{platformID}
+		</if>
+		<if test="type!=null">
+			and a.Type=#{type}
+		</if>
+		<if test="adCode!=null and adCode!=''">
+			and a.AdCode=#{adCode}
+		</if>
+		<if test="createUserID!=null and createUserID!=''">
+			and ads.CreateUserID=#{createUserID}
+		</if>
+		<if test="uploadUserID!=null and uploadUserID!=''">
+			and a.UploadUserID=#{uploadUserID}
+		</if>
+		<if test="statusList!=null">
+			and ads.Status in
+			<foreach collection="statusList" index="index" item="item"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		ORDER BY FIND_IN_SET(ads.`Status`,'待审核,准备投放,正在投放,投放完毕,异常下架,'),ads.ModifyTime DESC
+	</select>
+	<!-- 结束标志 -->
+
+	<!-- 查询广告库的广告的SQL语句 -->
+	<select id="smserachAds"
+		parameterType="com.better517na.adsManageDataService.model.bo.SearchAdsBo"
+		resultMap="AdsReturnVo">
+		SELECT
+		a.AdID,a.AdCode,a.Type,a.Title,a.Content,a.Link,ads.Status,a.UploadTime,a.UploadUserID,a.UpdateUserID,a.ModifyTime,a.LinkType,
+		a.AdWidth,a.AdHeight
+		from AdInfo a LEFT JOIN (select ads.AdID,ads.Status from AdSpaceRela ads
+		where ads.IsDelete=0) ads ON a.AdID=ads.AdID
+		where 1=1 and a.IsDelete=0   
+		<if test="adCode!=null and adCode!=''">
+			and a.AdCode=#{adCode}
+		</if>
+		<if test="title!=null and title!=''">
+			and a.Title=#{title}
+		</if>
+		<if test="uploadTimeBegin!=null and uploadTimeBegin!=''">
+			and a.UploadTime &lt;= '${uploadTimeBegin}'
+		</if>
+		<if test="uploadTimeEnd!=null and uploadTimeEnd!=''">
+			and a.UploadTime &gt;= '${uploadTimeEnd}'
+		</if>
+		<if test="uploadUserID!=null and uploadUserID!=''">
+			and a.UploadUserID=#{uploadUserID}
+		</if>
+		<if test="adID!=null and adID!=''">
+			and a.AdID=#{adID}
+		</if>
+		GROUP BY a.AdID ORDER BY a.ModifyTime DESC
+	</select>
+	<!-- 结束标志 -->
+
+
+	<select id="findChannelSpaceByPage" parameterType="com.better517na.adsManageDataService.model.vo.ChannelVo"
+		resultType="com.better517na.adsManageDataService.model.vo.ChannelPlaformSearchVo">
+		select
+        c.ChannelID,c.ChannelCode,c.ChannelName,p.PlatformName,p.PlatformID,p.PlatformCode,s.SpaceID,c.Description,c.IsOpen,c.ModifyTime,c.UpdateUserID
+        FROM ChannelInfo c LEFT JOIN (SELECT s1.SpaceID,s1.ChannelID,s1.PlatformID from SpaceInfo s1 where s1.IsDelete=0) s ON s.ChannelID=c.ChannelID
+        left join (select cp1.IsDelete,cp1.ChannelID,cp1.PlatformID from ChannelPlatformRela cp1 where cp1.IsDelete=0) cp ON c.ChannelID=cp.ChannelID
+        LEFT JOIN (select p1.PlatformName,p1.IsDelete,p1.PlatformID ,p1.PlatformCode FROM PlatformInfo p1 where p1.IsDelete=0
+        <if test="platformStatus!=null and platformStatus!=''">
+			and p1.IsOpen = '${platformStatus}'
+		</if>
+        ) p ON
+        p.PlatformID=cp.PlatformID
+        where c.IsDelete=0
+		<if test="channelId!=null and channelId!=''">
+			and c.ChannelID = '${channelId}'
+		</if>
+		<if test="channelCode!=null and channelCode!=''">
+			and c.ChannelCode = '${channelCode}'
+		</if>
+		<if test="channelName!=null and channelName!=''">
+			and c.ChannelName = '${channelName}'
+		</if>
+
+		<if test="isOpen!=null and isOpen!=''">
+			and c.IsOpen = '${isOpen}'
+		</if>
+		ORDER BY c.ChannelCode
+
+	</select>
+	<select id="findCChannelSpaceByPage" parameterType="com.better517na.adsManageDataService.model.vo.PlatformVo"
+		resultType="com.better517na.adsManageDataService.model.vo.CChannelPlatformSearchVo">
+		select
+        p.PlatformID,p.PlatformCode,p.PlatformName,c.ChannelName,c.ChannelID,s.SpaceID,p.Description,p.IsOpen,p.ModifyTime,p.UpdateUserID
+        FROM PlatformInfo p LEFT JOIN (SELECT s1.SpaceID,s1.PlatformID,s1.ChannelID from SpaceInfo s1 where s1.IsDelete=0) s ON s.PlatformID=p.PlatformID
+        left join (select cp1.IsDelete,cp1.ChannelID,cp1.PlatformID from ChannelPlatformRela cp1 where cp1.IsDelete=0) cp ON p.PlatformID=cp.PlatformID
+        LEFT JOIN (select c1.ChannelName,c1.IsDelete,c1.ChannelID FROM ChannelInfo c1 where c1.IsDelete=0) c ON c.ChannelID=cp.ChannelID
+        where p.IsDelete=0
+        <if test="platformID!=null and platformID!=''">
+			and p.PlatformID = '${platformID}'
+		</if>
+		<if test="isOpen!=null and isOpen!=''">
+			and p.IsOpen = '${isOpen}'
+		</if>
+	</select>
+
+	<select id="selectAdSpaceBySpaceID" parameterType="java.util.Map"
+		resultType="com.better517na.adsManageDataService.model.vo.AdSpaceVo">
+		select
+		AdSpaceID,AdID,SpaceID,StartTime,EndTime,CreateTime,CreateUserID,ModifyTime,
+		UpdateUserID,Status,IsDelete from AdSpaceRela where 1=1 and IsDelete=0
+		<if test="spaceID!=null and spaceID!=''">
+		and SpaceID=#{spaceID}
+		</if>
+		<if test="status1!=null and status1!=''">
+		and Status in(#{status1}
+		</if>
+		<if test="status2!=null and status2!=''">
+		,#{status2}
+		</if>
+		<if test="status1!=null and status1!=''">
+		)
+		</if>
+	</select>
+</mapper>

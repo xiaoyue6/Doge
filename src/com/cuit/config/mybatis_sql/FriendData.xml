@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cuit.DogeMusicDataService.dao.IFriendDataDao">
+	<!-- 给用户添加好友 -->
+	<select id="addFriend" parameterType="com.cuit.DogeMusicDataService.model.bo.UserFriendBo">
+			INSERT into
+			<if test="tableName!=null and tableName!=''">
+				${tableName}
+			</if>
+			{UserFriendId,UserId,FriendId,IsDelect)
+			VALUES(#{userFriendId},#{userId},#{friendId},#{isDelect})
+	</select>
+	<!-- 删除好友，删除用户好友信息关联表中的信息 -->
+	<select id="delectFriend" parameterType="com.cuit.DogeMusicDataService.model.vo.UserFriendVo">
+			UPDATE ${tableName}
+			<if test="isDelect!=null and isDelect!=''">
+				and IsDelect=#{isDelect}
+			</if>
+			where 1=1 
+			<if test="userId!=null and userId!=''">
+				and UserId=#{userId}
+			</if>
+			<if test="friendId!=null and friendId!=''">
+				and FriendId=#{friendId}
+			</if>
+	</select>
+	<!-- 查询用户的好友信息 -->
+	<select id="queryFriendsList" parameterType="com.cuit.DogeMusicDataService.model.bo.LoginBo"
+			resultType="com.cuit.DogeMusicDataService.model.vo.FriendVo">
+			SELECT uf.UserId,u.Sex 
+			from UserFriend uf LEFT JOIN (SELECT u1.UserId,u1.UserName,u1.UserType,u1.Age,u1.Nation,u1.sex from UserBasicMsg) u 
+			ON uf.FriendId=u.UserId WHERE 1=1
+			<if test="account!=null and account!=''">
+				and uf.UserId=#{account}
+			</if>
+			and uf.IsDelect=0 order by uf.UserId
+	</select>
+</mapper>

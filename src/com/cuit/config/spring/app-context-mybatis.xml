@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+	<bean id="parentDataSource" class="com.better517na.factory.DataSourceMapper"
+		abstract="true">
+		<property name="applicationName" value="${applicationName}"></property>
+		<property name="databaseName" value="${databaseName}"></property>
+		<property name="bizTime" value="${bizTime}"></property>
+
+		<property name="initialSize" value="${pool.initialSize}" />
+		<property name="maxActive" value="${pool.maxActive}" />
+		<property name="maxIdle" value="${pool.maxIdle}" />
+		<property name="maxWait" value="${pool.maxWait}" />
+		<property name="poolPreparedStatements" value="${pool.poolPreparedStatements}" />
+		<property name="defaultAutoCommit" value="${pool.defaultAutoCommit}" />
+	</bean>
+
+	<!-- 配置第一数据源 （写库） -->
+	<bean id="dataSourceWrite" parent="parentDataSource">
+		<property name="isRead" value="false"></property>
+	</bean>
+
+	<bean id="sqlSessionFactoryWrite" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation"
+			value="classpath:com/better517na/config/spring/mybatis-config.xml"></property>
+		<property name="dataSource" ref="dataSourceWrite" />
+	</bean>
+
+	<bean id="sqlSessionWrite" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactoryWrite" />
+	</bean>
+
+	<!--启动写库的spring事务注解功能 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- Transaction manager for a single dataSource -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceWrite" />
+	</bean>
+	<!-- 配置第二数据源 （读库） -->
+	<bean id="dataSourceRead" parent="parentDataSource">
+		<property name="isRead" value="true"></property>
+	</bean>
+
+	<bean id="sqlSessionFactoryRead" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation"
+			value="classpath:com/better517na/config/spring/mybatis-config.xml"></property>
+		<property name="dataSource" ref="dataSourceRead" />
+	</bean>
+
+	<bean id="sqlSessionRead" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactoryRead" />
+	</bean>
+
+</beans>
