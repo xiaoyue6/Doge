@@ -6,7 +6,9 @@ import com.cuit.DogeMusicDataService.model.vo.FriendVo;
 import com.cuit.DogeMusicDataService.model.vo.LoginVo;
 import com.cuit.DogeMusicDataService.model.vo.UserFriendVo;
 import com.cuit.DogeMusicDataService.model.vo.UserMsgVo;
-
+/**
+ * 好友相关操作接口
+ * */
 public interface IFriendDataDao {
 	/**
 	 * 添加好友
