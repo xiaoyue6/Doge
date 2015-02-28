@@ -33,7 +33,7 @@ import com.google.gson.Gson;
  * @author     qinfei
  */
 @Component("uploadController")
-public class UploadController {
+public class UploadController extends BaseController{
     @Resource(name="logBusiness")
     private LogBusiness logBusiness;
     
@@ -44,7 +44,7 @@ public class UploadController {
     {
         return "";
     }
-    @RequestMapping(value="appFindAdBySpaceCodesGet.htm",method=RequestMethod.GET)
+    @RequestMapping(value="/appFindAdBySpaceCodesGet.htm",method=RequestMethod.GET)
     public @ResponseBody String uploadMusicTest2(HttpServletRequest request,HttpServletResponse response)
     {
         return "";
