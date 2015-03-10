@@ -1,9 +1,16 @@
 package com.cuit.DogeMusicDataService.model.bo;
 
+import com.cuit.DogeMusicDataService.model.vo.LoginVo;
+
 public class LoginBo {
 	private String account;
 	private String password;
 	private String tableName;
+	public LoginBo(LoginVo vo)
+	{
+		this.account = vo.getAccount();
+		this.password = vo.getPassword();
+	}
 	public LoginBo(String account, String password, String tableName) {
 		super();
 		this.account = account;

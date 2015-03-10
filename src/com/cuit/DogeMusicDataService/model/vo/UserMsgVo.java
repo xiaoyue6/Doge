@@ -3,12 +3,16 @@ package com.cuit.DogeMusicDataService.model.vo;
 public class UserMsgVo {
 	
 	private String account;
+	private String passWord;
 	private Integer age;
 	private String sex;
 	private String nation;
 	private String email;
 	private Integer userLevel;
-	
+	public UserMsgVo()
+	{
+		
+	}
 	public UserMsgVo(String account, Integer age, String sex, String nation,
 			String email, Integer userLevel) {
 		super();
@@ -54,6 +58,12 @@ public class UserMsgVo {
 	}
 	public void setUserLevel(Integer userLevel) {
 		this.userLevel = userLevel;
+	}
+	public String getPassWord() {
+		return passWord;
+	}
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
 	}
 	
 }

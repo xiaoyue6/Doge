@@ -110,5 +110,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xmlsec-1.4.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/com.better517na.logcomponent.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/com.better517na.javaDBRouteHelper.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/org.apache.httpcomponents.httpclient_4.3.4.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
