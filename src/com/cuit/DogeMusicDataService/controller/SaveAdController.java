@@ -1,4 +1,4 @@
-package com.better517na.adsManageResourceService.controller;
+package com.cuit.DogeMusicDataService.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
