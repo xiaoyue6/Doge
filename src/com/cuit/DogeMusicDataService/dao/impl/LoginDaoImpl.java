@@ -21,15 +21,27 @@ public class LoginDaoImpl extends BaseDaoImpl implements ILoginDao{
 	}
 
 	@Override
-	public boolean registry(UserMsgBo bo) {
+	public String registry(UserMsgBo bo) {
 		// TODO Auto-generated method stub
 		int result = 0;
 		result = this.sqlSessionWrite.insert("register", bo);
 		if(result==1)
 		{
-			return true;
+			return "1";
 		}
-		return false;
+		return "0";
+	}
+
+	@Override
+	public String update(UserMsgBo bo) {
+		// TODO Auto-generated method stub
+		int result = 0;
+		result = this.sqlSessionWrite.update("register", bo);
+		if(result==1)
+		{
+			return "1";
+		}
+		return "0";
 	}
 
 }

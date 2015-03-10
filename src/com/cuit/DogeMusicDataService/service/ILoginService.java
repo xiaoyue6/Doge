@@ -15,7 +15,7 @@ public interface ILoginService {
 	 * @param vo
 	 * @return
 	 */
-	public String register(String vo);
+	public String registery(String vo);
 	/**
 	 * 用户基础信息更新接口
 	 * @param vo

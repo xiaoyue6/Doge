@@ -36,20 +36,45 @@ public class LoginServiceImpl extends BaseServiceImpl implements ILoginService{
 		}
 		catch(Exception e)
 		{
+			toFailure("登录失败");
 			logBusiness.writeExceptionLog(new MLogException(ExceptionLevel.Error, "login", e));
 		}
 		return null;
 	}
 
 	@Override
-	public String register(String vo) {
+	public String registery(String vo) {
 		// TODO Auto-generated method stub
+		UserMsgVo msgVo = toObject(vo, UserMsgVo.class);
+		String status;
+		try
+		{
+			status = loginBusiness.registery(msgVo);
+			return toSuccess(status);
+		}
+		catch(Exception e)
+		{
+			toFailure("注册失败");
+			logBusiness.writeExceptionLog(new MLogException(ExceptionLevel.Error, "registery", e));
+		}
 		return null;
 	}
 
 	@Override
 	public String updateBasicMsg(String vo) {
 		// TODO Auto-generated method stub
+		UserMsgVo msgVo = toObject(vo, UserMsgVo.class);
+		String status;
+		try
+		{
+			status = loginBusiness.update(msgVo);
+			return toSuccess(status);
+		}
+		catch(Exception e)
+		{
+			toFailure("修改用户信息失败");
+			logBusiness.writeExceptionLog(new MLogException(ExceptionLevel.Error, "registery", e));
+		}
 		return null;
 	}
 

@@ -17,6 +17,10 @@ public interface ILoginDao {
 	/**
 	 * 用户注册
 	 * */
-	public boolean registry(UserMsgBo vo);
+	public String registry(UserMsgBo vo);
+	/**
+	 * 用户信息修改
+	 * */
+	public String update(UserMsgBo vo);
 	
 }
